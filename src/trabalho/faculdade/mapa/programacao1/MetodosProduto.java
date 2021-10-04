@@ -556,47 +556,66 @@ public class MetodosProduto extends Produto {
                 System.out.println("Nome:" + produto.getNome());
                 System.out.println("Preço Unitário do(a) " + produto.getUnidadeMedida() + ":R$" + produto.getPrecoUnitario());
                 System.out.println("========================");
-                System.out.println("Digite o percentual de reajuste do preço do produto:");
-                percentPrecoReajusteUmProduto = scan.nextFloat();
-                do {
-                    if (percentPrecoReajusteUmProduto<(-100)){
-                        System.out.println("Erro!\nImpossível subtrair a porcentagem desejada!\nTente novamente!");
-                        System.out.println("Digite o percentual de reajuste do preço do produto:");
-                        percentPrecoReajusteUmProduto = scan.nextFloat();
-                    }
-                }while (percentPrecoReajusteUmProduto<(-100));
+
+                boolean rodandoReajuste = true;
 
 
-                do {
-                    System.out.println("CONFIRMA O REAJUSTE DO PREÇO EM " + percentPrecoReajusteUmProduto + "%?(S/N)");
-                    System.out.println("| [1] PARA SIM |");
-                    System.out.println("| [2] PARA NÃO |");
-                    respConfirmaReajusteProduto = scan.nextInt(); scan.nextLine();
-                    switch (respConfirmaReajusteProduto) {
-                        case 1:
-                            percentPrecoReajusteUmProduto = percentPrecoReajusteUmProduto / 100;
-                            valorReajusteProduto = produto.getPrecoUnitario() * percentPrecoReajusteUmProduto;
-                            if (valorReajusteProduto < 0) {
-                                valorReajusteProduto = valorReajusteProduto * (-1);
-                                produto.setPrecoUnitario(produto.getPrecoUnitario() - valorReajusteProduto);
+                while (rodandoReajuste){
+                    Scanner scanReajuste = new Scanner(System.in);
+                    System.out.println("Digite o percentual de reajuste do preço do produto:");
 
-                            } else if (valorReajusteProduto >= 0) {
-                                produto.setPrecoUnitario(produto.getPrecoUnitario() + (valorReajusteProduto));
+                    try{
+                        percentPrecoReajusteUmProduto = scanReajuste.nextFloat();
+                        do {
+                            if (percentPrecoReajusteUmProduto<(-100)){
+                                System.out.println("Erro!\nImpossível subtrair a porcentagem desejada!\nTente novamente!");
+                                System.out.println("Digite o percentual de reajuste do preço do produto:");
+                                percentPrecoReajusteUmProduto = scanReajuste.nextFloat();
                             }
-                            setRetornandoReajustePrecoUmProduto(true);
-                            System.out.println("Reajuste realizado com sucesso!");
-                            System.out.println("===============================");
-                            break;
-                        case 2:
-                            setRetornandoReajustePrecoUmProduto(true);
-                            return;
-                        default:
-                            System.out.println("Opção Inválida\nTente Novamente!");
-                            System.out.println("=======================================");
-                            break;
+                        }while (percentPrecoReajusteUmProduto<(-100));
+
+
+                        do {
+                            System.out.println("CONFIRMA O REAJUSTE DO PREÇO EM " + percentPrecoReajusteUmProduto + "%?(S/N)");
+                            System.out.println("| [1] PARA SIM |");
+                            System.out.println("| [2] PARA NÃO |");
+                            respConfirmaReajusteProduto = scan.nextInt(); scan.nextLine();
+                            switch (respConfirmaReajusteProduto) {
+                                case 1:
+                                    percentPrecoReajusteUmProduto = percentPrecoReajusteUmProduto / 100;
+                                    valorReajusteProduto = produto.getPrecoUnitario() * percentPrecoReajusteUmProduto;
+                                    if (valorReajusteProduto < 0) {
+                                        valorReajusteProduto = valorReajusteProduto * (-1);
+                                        produto.setPrecoUnitario(produto.getPrecoUnitario() - valorReajusteProduto);
+                                        rodandoReajuste = false;
+
+                                    } else if (valorReajusteProduto >= 0) {
+                                        produto.setPrecoUnitario(produto.getPrecoUnitario() + (valorReajusteProduto));
+                                    }
+                                    setRetornandoReajustePrecoUmProduto(true);
+                                    System.out.println("Reajuste realizado com sucesso!");
+                                    System.out.println("===============================");
+                                    break;
+                                case 2:
+                                    setRetornandoReajustePrecoUmProduto(true);
+                                    rodandoReajuste = false;
+                                    return;
+                                default:
+                                    System.out.println("Opção Inválida\nTente Novamente!");
+                                    System.out.println("=======================================");
+                                    break;
+                            }
+
+                        }while (respConfirmaReajusteProduto!=1 && respConfirmaReajusteProduto!=2);
+
+
+                    }catch (InputMismatchException e){
+                        System.out.println("Erro!\nO valor digitado NÃO foi um número!");
+
                     }
 
-                }while (respConfirmaReajusteProduto!=1 && respConfirmaReajusteProduto!=2);
+                }
+
 
 
 
@@ -625,48 +644,64 @@ public class MetodosProduto extends Produto {
 
         System.out.println("=========REAJUSTANDO PERCENTUAL DE PREÇO========");
 
-        System.out.println("Digite o percentual de reajuste do preço dos produtos:");
-        percentPrecoReajuste = scan.nextFloat();
+        boolean rodandoReajusteTodosPrecos = true;
 
-        do {
-            if (percentPrecoReajuste<(-100)){
-                System.out.println("Erro!\nImpossível subtrair a porcentagem desejada!\nTente novamente!");
-                System.out.println("Digite o percentual de reajuste do preço dos produtos:");
-                percentPrecoReajuste = scan.nextFloat();
-            }
-        }while (percentPrecoReajuste<(-100));
-        do {
-            System.out.println("CONFIRMA O REAJUSTE DO PREÇO EM "+percentPrecoReajuste+"%?(S/N)");
-            System.out.println("| [1] PARA SIM |");
-            System.out.println("| [2] PARA NÃO |");
-            respConfirmaReajuste = scan.nextInt();scan.nextLine();
-            switch (respConfirmaReajuste){
-                case 1:
-                    percentPrecoReajuste = percentPrecoReajuste/100;
-                    for (Produto produto : listaProdutos){
-                        valorReajuste = produto.getPrecoUnitario()*percentPrecoReajuste;
-                        if(valorReajuste<0){
-                            valorReajuste = valorReajuste*(-1);
-                            produto.setPrecoUnitario(produto.getPrecoUnitario() - valorReajuste);
-                        }
-                        else if (valorReajuste>=0){
-                            produto.setPrecoUnitario(produto.getPrecoUnitario() + (valorReajuste));
-                        }
+
+
+        while (rodandoReajusteTodosPrecos){
+            Scanner scanReajustandoTodosPrecos = new Scanner(System.in);
+            System.out.println("Digite o percentual de reajuste do preço dos produtos:");
+            try {
+                percentPrecoReajuste = scanReajustandoTodosPrecos.nextFloat();
+                do {
+                    if (percentPrecoReajuste<(-100)){
+                        System.out.println("Erro!\nImpossível subtrair a porcentagem desejada!\nTente novamente!");
+                        System.out.println("Digite o percentual de reajuste do preço dos produtos:");
+                        percentPrecoReajuste = scanReajustandoTodosPrecos.nextFloat();
+                    }
+                }while (percentPrecoReajuste<(-100));
+                do {
+                    System.out.println("CONFIRMA O REAJUSTE DO PREÇO EM "+percentPrecoReajuste+"%?(S/N)");
+                    System.out.println("| [1] PARA SIM |");
+                    System.out.println("| [2] PARA NÃO |");
+                    respConfirmaReajuste = scan.nextInt();scan.nextLine();
+                    switch (respConfirmaReajuste){
+                        case 1:
+                            percentPrecoReajuste = percentPrecoReajuste/100;
+                            for (Produto produto : listaProdutos){
+                                valorReajuste = produto.getPrecoUnitario()*percentPrecoReajuste;
+                                if(valorReajuste<0){
+                                    valorReajuste = valorReajuste*(-1);
+                                    produto.setPrecoUnitario(produto.getPrecoUnitario() - valorReajuste);
+                                }
+                                else if (valorReajuste>=0){
+                                    produto.setPrecoUnitario(produto.getPrecoUnitario() + (valorReajuste));
+                                }
+                                rodandoReajusteTodosPrecos =false;
+                            }
+
+                            setRetornandoReajusteTodosPrecos(true);
+                            System.out.println("Reajuste realizado com sucesso!");
+                            System.out.println("===============================");
+                            break;
+                        case 2:
+                            rodandoReajusteTodosPrecos =false;
+                            return;
+                        default:
+                            System.out.println("Opção Inválida\nTente Novamente!");
+                            System.out.println("=======================================");
+                            break;
                     }
 
-                    setRetornandoReajusteTodosPrecos(true);
-                    System.out.println("Reajuste realizado com sucesso!");
-                    System.out.println("===============================");
-                    break;
-                case 2:
-                    return;
-                default:
-                    System.out.println("Opção Inválida\nTente Novamente!");
-                    System.out.println("=======================================");
-                    break;
+                }while (respConfirmaReajuste!=1 && respConfirmaReajuste!=2);
+
+            }catch (InputMismatchException e){
+                System.out.println("Erro!\nO valor digitado NÃO foi um número!");
             }
 
-        }while (respConfirmaReajuste!=1 && respConfirmaReajuste!=2);
+        }
+
+
 
     }
 
@@ -696,4 +731,3 @@ public class MetodosProduto extends Produto {
 
 
 }
-

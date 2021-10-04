@@ -13,6 +13,7 @@ public class Produto {
     private int quantidadeEstoque;
 
     private String respConsultaNome;
+    private float precoUnitarioAlterado;
 
 
     boolean retornandoCadastro = false;
@@ -45,6 +46,14 @@ public class Produto {
     private String confirmaSaidaProduto;
 
     private int quantEntradaProduto;
+
+    public float getPrecoUnitarioAlterado() {
+        return precoUnitarioAlterado;
+    }
+
+    public void setPrecoUnitarioAlterado(float precoUnitarioAlterado) {
+        this.precoUnitarioAlterado = precoUnitarioAlterado;
+    }
 
     public int getQuantEntradaProduto() {
         return quantEntradaProduto;

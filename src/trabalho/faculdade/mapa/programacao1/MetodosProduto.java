@@ -1,6 +1,7 @@
 package trabalho.faculdade.mapa.programacao1;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -57,22 +58,50 @@ public class MetodosProduto extends Produto {
         produto.setUnidadeMedida(scan.nextLine());
         produto.setUnidadeMedida(produto.getUnidadeMedida().toUpperCase().strip());
 
-        System.out.print("Digite o preço do(a) " + produto.getUnidadeMedida() + " do produto:R$");
-        produto.setPrecoUnitario(scan.nextFloat());scan.nextLine();
-        while (produto.getPrecoUnitario()<=0){
-            System.out.println("Erro!\nO preço do produto dever maior que zero(0)!\nTente novamente!");
-            System.out.println("====================================================================");
+
+        boolean rodando1 = true;
+        while (rodando1){
             System.out.print("Digite o preço do(a) " + produto.getUnidadeMedida() + " do produto:R$");
-            produto.setPrecoUnitario(scan.nextFloat());scan.nextLine();
+            Scanner scanPreco = new Scanner(System.in);
+            try{
+                produto.setPrecoUnitario(scanPreco.nextFloat());
+
+                if (produto.getPrecoUnitario()<=0){
+                    System.out.println("Erro!\nO preço do produto dever maior que zero(0)!\nTente novamente!");
+                    System.out.println("====================================================================");
+                    System.out.print("Digite o preço do(a) " + produto.getUnidadeMedida() + " do produto:R$");
+                    produto.setPrecoUnitario(scanPreco.nextFloat());
+                }
+
+            }catch (InputMismatchException e){
+                System.out.println("Erro!\nO valor digitado NÃO foi um número!");
+            }
+            if(produto.getPrecoUnitario()>0){
+                rodando1 = false;
+            }
         }
 
-        System.out.print("Digite a quantidade em " + produto.getUnidadeMedida() + "(s) do produto que será armazenado em estoque:");
-        produto.setQuantidadeEstoque(scan.nextInt());scan.nextLine();
-        while (produto.getQuantidadeEstoque()<=0){
-            System.out.println("Erro!\nA quantidade do produto que será armazena em estoque tem que ser maior que zero(0)!\nTente novamente!");
-            System.out.println("====================================================================");
+        boolean rodandoQuant = true;
+        while (rodandoQuant){
             System.out.print("Digite a quantidade em " + produto.getUnidadeMedida() + "(s) do produto que será armazenado em estoque:");
-            produto.setQuantidadeEstoque(scan.nextInt());scan.nextLine();
+            Scanner scanQuant1 = new Scanner(System.in);
+            try {
+                produto.setQuantidadeEstoque(scanQuant1.nextInt());
+                if (produto.getQuantidadeEstoque()<=0){
+                    System.out.println("Erro!\nA quantidade do produto que será armazena em estoque tem que ser maior que zero(0)!\nTente novamente!");
+                    System.out.println("====================================================================");
+                    System.out.print("Digite a quantidade em " + produto.getUnidadeMedida() + "(s) do produto que será armazenado em estoque:");
+                    produto.setQuantidadeEstoque(scanQuant1.nextInt());
+
+                }
+
+            }catch (InputMismatchException e){
+                System.out.println("Erro!\nO valor digitado NÃO foi um número!");
+            }
+            if (produto.getQuantidadeEstoque()>0){
+                rodandoQuant = false;
+            }
+
         }
 
         boolean rodando=true;
@@ -179,8 +208,29 @@ public class MetodosProduto extends Produto {
                 produto.setUnidadeMedida(scan.nextLine());
                 produto.setUnidadeMedida(produto.getUnidadeMedida().toUpperCase().strip());
 
-                System.out.print("Digite o preço do(a) "+produto.getUnidadeMedida()+" do produto:R$");
-                produto.setPrecoUnitario(scan.nextFloat()); scan.nextLine();
+                boolean rodandoAltPreco = true;
+
+                while (rodandoAltPreco){
+                    Scanner scanAlterando = new Scanner(System.in);
+                    System.out.print("Digite o preço do(a) "+produto.getUnidadeMedida()+" do produto:R$");
+                    try{
+                        produto.setPrecoUnitarioAlterado(scanAlterando.nextFloat());
+                        if (produto.getPrecoUnitarioAlterado()<=0){
+                            System.out.println("Erro!\nO preço do produto dever maior que zero(0)!\nTente novamente!");
+                            System.out.println("====================================================================");
+                            System.out.print("Digite o preço do(a) " + produto.getUnidadeMedida() + " do produto:R$");
+                            produto.setPrecoUnitarioAlterado(scanAlterando.nextFloat());
+                        }
+
+                    }catch (InputMismatchException e){
+                        System.out.println("Erro!\nO valor digitado NÃO foi um número!");
+                    }
+                    if (produto.getPrecoUnitarioAlterado()>0){
+
+                        rodandoAltPreco = false;
+                    }
+                }
+
 
                 boolean rodando =true;
                 while (rodando){
@@ -190,7 +240,7 @@ public class MetodosProduto extends Produto {
                     setConfirmaAlteracao(scan.nextLine());
                     switch (getConfirmaAlteracao()){
                         case "1":
-                            produto.setPrecoUnitario(produto.getPrecoUnitario());
+                            produto.setPrecoUnitario(produto.getPrecoUnitarioAlterado());
                             produto.setUnidadeMedida(produto.getUnidadeMedida());
                             produto.setQuantidadeEstoque(produto.getQuantidadeEstoque());
                             setRetornandoAlteracao(true);
@@ -261,7 +311,7 @@ public class MetodosProduto extends Produto {
 
                             setRetornandoExclusao(true);
                             retornando = removendo(getRespExcluiProduto());
-                            if(retornando==true){
+                            if(retornando){
                                 System.out.println("Exclusão efetuada com Sucesso!");
                                 System.out.println("==============================");
                                 rodando = false;
@@ -646,3 +696,4 @@ public class MetodosProduto extends Produto {
 
 
 }
+

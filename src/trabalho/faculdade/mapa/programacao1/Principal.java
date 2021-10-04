@@ -1,6 +1,7 @@
 package trabalho.faculdade.mapa.programacao1;
 
 
+import java.util.InputMismatchException;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -35,6 +36,7 @@ public class Principal {
 
         while (rodandoMenuPrincipal) {
 
+
             respMenuPrincipal=menu.menuPrincipal();
             rodandoMenuProdutos = true;
             rodandoMenuMovimantacao = true;
@@ -49,8 +51,31 @@ public class Principal {
                                 String confirma;
                                 System.out.println("====CADASTRANDO PRODUTO====");
 
+                                boolean rodandoQuant = true;
+                                int quant=0;
+                                while (rodandoQuant){
+                                    Scanner scanQuant = new Scanner(System.in);
+                                    try {
+                                        System.out.println("Digite a quantidade de produtos que deseja cadastrar");
+                                        quant = scanQuant.nextInt();
+                                        if(quant<=0){
+                                            System.out.println("A quantidade tem que ser maior que zero!\nTente Novamente!");
+                                            System.out.println("Digite a quantidade de produtos que deseja cadastrar");
+                                            quant = scanQuant.nextInt();
+                                        }
+
+                                    }catch (InputMismatchException e){
+                                        System.out.println("Erro!\nO valor digitado NÃO foi um número!");
+                                    }
+                                    if (quant>0){
+                                        rodandoQuant=false;
+                                    }
+
+
+                                }
                                 System.out.println("Digite a quantidade de produtos que deseja cadastrar");
-                                int quant = scan.nextInt(); scan.nextLine();
+
+
                                 rodando = true;
                                 while (rodando){
                                     System.out.println("CONFIRMA A SOLICITAÇÃO PARA O CADASTRAMENTO DE "+quant+" PRODUTO(S)?(S/N)");

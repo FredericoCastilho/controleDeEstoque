@@ -1,31 +1,27 @@
 package trabalho.faculdade.mapa.programacao1;
 
-
 import java.util.InputMismatchException;
 import java.util.Locale;
 import java.util.Scanner;
 
 public class Principal {
 
-    //Construtor
-    public Principal(){
+    // Construtor
+    public Principal() {
 
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         Menu menu = new Menu();
         MetodosProduto produto1 = new MetodosProduto();
 
         Scanner scan = new Scanner(System.in);
 
-
         String respMenuPrincipal;
         String respMenuProdutos;
         String respMenuMovimentacao;
         String respMenuReajustePreco;
-
-
 
         boolean rodandoMenuPrincipal = true;
         boolean rodandoMenuProdutos;
@@ -33,66 +29,63 @@ public class Principal {
         boolean rodandoMenuReajustePreco;
         boolean rodando;
 
-
         while (rodandoMenuPrincipal) {
 
-
-            respMenuPrincipal=menu.menuPrincipal();
+            respMenuPrincipal = menu.menuPrincipal();
             rodandoMenuProdutos = true;
             rodandoMenuMovimantacao = true;
             rodandoMenuReajustePreco = true;
-            switch (respMenuPrincipal){
+            switch (respMenuPrincipal) {
                 case "1":
                     while (rodandoMenuProdutos) {
                         respMenuProdutos = menu.menuProdutos();
-                        switch (respMenuProdutos){
+                        switch (respMenuProdutos) {
                             case "1":
                                 int i = 0;
                                 String confirma;
                                 System.out.println("====CADASTRANDO PRODUTO====");
 
                                 boolean rodandoQuant = true;
-                                int quant=0;
-                                while (rodandoQuant){
+                                int quant = 0;
+                                while (rodandoQuant) {
                                     Scanner scanQuant = new Scanner(System.in);
                                     try {
                                         System.out.println("Digite a quantidade de produtos que deseja cadastrar");
                                         quant = scanQuant.nextInt();
-                                        if(quant<=0){
-                                            System.out.println("A quantidade tem que ser maior que zero!\nTente Novamente!");
+                                        if (quant <= 0) {
+                                            System.out.println(
+                                                    "A quantidade tem que ser maior que zero!\nTente Novamente!");
                                             System.out.println("Digite a quantidade de produtos que deseja cadastrar");
                                             quant = scanQuant.nextInt();
                                         }
 
-                                    }catch (InputMismatchException e){
+                                    } catch (InputMismatchException e) {
                                         System.out.println("Erro!\nO valor digitado NÃO foi um número!");
                                     }
-                                    if (quant>0){
-                                        rodandoQuant=false;
+                                    if (quant > 0) {
+                                        rodandoQuant = false;
                                     }
 
-
                                 }
-                                System.out.println("Digite a quantidade de produtos que deseja cadastrar");
-
 
                                 rodando = true;
-                                while (rodando){
-                                    System.out.println("CONFIRMA A SOLICITAÇÃO PARA O CADASTRAMENTO DE "+quant+" PRODUTO(S)?(S/N)");
+                                while (rodando) {
+                                    System.out.println("CONFIRMA A SOLICITAÇÃO PARA O CADASTRAMENTO DE " + quant
+                                            + " PRODUTO(S)?(S/N)");
                                     System.out.println("| [1] PARA SIM |");
                                     System.out.println("| [2] PARA NÃO |");
-                                    confirma =  scan.nextLine().toUpperCase(Locale.ROOT).strip();
-                                    switch (confirma){
+                                    confirma = scan.nextLine().toUpperCase(Locale.ROOT).strip();
+                                    switch (confirma) {
                                         case "1":
-                                            for(int cont = 0; cont <quant;cont++) {
+                                            for (int cont = 0; cont < quant; cont++) {
                                                 produto1.cadastrandoProdutos(i);
                                                 i++;
                                             }
 
-                                            rodando=false;
+                                            rodando = false;
                                             break;
                                         case "2":
-                                            rodando =false;
+                                            rodando = false;
                                             break;
                                         default:
                                             System.out.println("Opção Inválida\nTente Novamente!");
@@ -129,9 +122,9 @@ public class Principal {
 
                 case "2":
 
-                    while (rodandoMenuMovimantacao){
+                    while (rodandoMenuMovimantacao) {
                         respMenuMovimentacao = menu.menuMovimentacao();
-                        switch (respMenuMovimentacao){
+                        switch (respMenuMovimentacao) {
                             case "1":
                                 produto1.entradaProduto();
                                 break;
@@ -152,9 +145,9 @@ public class Principal {
                     break;
                 case "3":
 
-                    while (rodandoMenuReajustePreco){
+                    while (rodandoMenuReajustePreco) {
                         respMenuReajustePreco = menu.menuReajustandoPreco();
-                        switch (respMenuReajustePreco){
+                        switch (respMenuReajustePreco) {
                             case "1":
                                 produto1.reajustandoUmProduto();
                                 break;
@@ -188,8 +181,6 @@ public class Principal {
             }
 
         }
-
-
 
     }
 }
